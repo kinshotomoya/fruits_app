@@ -4,7 +4,8 @@ class FruitsController < ApplicationController
   # GET /fruits
   # GET /fruits.json
   def index
-    @fruits = Fruit.all
+    #row_order順に並べる時は、rankメソッドを使う！
+    @fruits = Fruit.rank(:row_order)
   end
 
   # GET /fruits/1
@@ -24,6 +25,7 @@ class FruitsController < ApplicationController
   # POST /fruits
   # POST /fruits.json
   def create
+    binding.pry
     @fruit = Fruit.new(fruit_params)
 
     respond_to do |format|
@@ -61,6 +63,12 @@ class FruitsController < ApplicationController
     end
   end
 
+  def sort
+    fruit = Fruit.find(params[:fruit_id])
+    fruit.update(fruit_params)
+    render nothing: true
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fruit
@@ -69,6 +77,6 @@ class FruitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fruit_params
-      params.fetch(:fruit, {})
+      params.require(:fruit).permit(:name, :row_order_position)
     end
 end

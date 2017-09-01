@@ -10,7 +10,7 @@ table.table.table-bordered
 
   tbody.table-sortable
     - @fruits.each do |fruit|
-      tr.item(date={ model_name: fruit.class.name.underscore, update_url: fruit_sort_path(fruit) })
+      tr.item data-name="#{fruit.name}" data-id="#{fruit.id}"
         td = fruit.name
         td = link_to 'Show', fruit
         td = link_to 'Edit', edit_fruit_path(fruit)

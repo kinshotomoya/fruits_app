@@ -66,7 +66,7 @@ class FruitsController < ApplicationController
   def sort
     fruit = Fruit.find(params[:fruit_id])
     fruit.update(fruit_params)
-    render nothing: true
+    render :index
   end
 
   private

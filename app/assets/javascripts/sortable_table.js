@@ -3,8 +3,16 @@ $(function(){
   $('.table-sortable').disableSelection();
   $('.table-sortable').bind('sortstop', function(e, ui){
     item = ui.item;
-    item_data = item.data()
-    console.log(item, item_data.update_url)
+    name = item.attr('data-name');
+    order = item.index();
+    id = item.attr('data-id');
+    params = {fruit: {name: name, row_order_position: order}};
+    $.ajax({
+      url: "/fruits/" + id + "/sort",
+      type: 'PUT',
+      data: params,
+      dataType: 'JSON',
+    });
   })
 })
 

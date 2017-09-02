@@ -9,8 +9,9 @@ table.table.table-bordered
       th
 
   tbody.table-sortable
-    - @fruits.each do |fruit|
+    - @fruits.each_with_index do |fruit, i|
       tr.item data-name="#{fruit.name}" data-id="#{fruit.id}"
+        td.rank = fruit.row_order
         td = fruit.name
         td = link_to 'Show', fruit
         td = link_to 'Edit', edit_fruit_path(fruit)

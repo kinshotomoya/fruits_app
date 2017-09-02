@@ -1,4 +1,5 @@
 $(function(){
+
   $('.table-sortable').sortable();
   $('.table-sortable').disableSelection();
   $('.table-sortable').bind('sortstop', function(e, ui){
@@ -13,7 +14,19 @@ $(function(){
       type: 'PUT',
       data: params,
       dataType: 'JSON',
-    });
+    })
+    .done(function(res){
+      changeRankText(res, item);
+    })
+    .fail(function(res){
+
+    })
+    var changeRankText = function(res, item){
+      var $ranks = $('.rank');
+      $.each($ranks, function(i, rank){
+        $(rank).text(i+1);
+      })
+    }
   })
 })
 

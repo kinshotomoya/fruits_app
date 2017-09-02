@@ -66,7 +66,12 @@ class FruitsController < ApplicationController
   def sort
     fruit = Fruit.find(params[:fruit_id])
     fruit.update(fruit_params)
-    render :index
+    fruits = Fruit.order('row_order desc')
+    fruits.each_with_index do |fruit, index|
+      fruit.row_order = index + 1
+      fruit.update!(update_params)
+    end
+    render json: {redirect_url: fruits_path, data: fruits }
   end
 
   private
@@ -78,5 +83,9 @@ class FruitsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def fruit_params
       params.require(:fruit).permit(:name, :row_order_position)
+    end
+
+    def update_params
+      params.require(:fruit).permit(:name, :row_order)
     end
 end
